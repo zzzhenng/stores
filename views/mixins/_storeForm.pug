@@ -1,0 +1,24 @@
+mixin storeForm()
+  form(action=`/add` method="POST")
+    label(for="name") 名称
+    input(type="text" name="name")
+    label(for="description") 描述
+    textarea(name="description")
+    //- Image upload
+    label(for="photo") 照片
+    input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
+    //- Address
+    label(for="address") 地址
+    input(type="text" id="address" name="location[address]")
+    label(for="lng") 纬度
+    input(type="text" id="lng" name="location[coordinates][0]")
+    label(for="lat") 经度
+    input(type="text" id="lat" name="location[coordinates][1]")
+
+    - const choices = ['小吃', '甜食', '西餐', '早餐', '汤羹', '热菜', '凉菜'];
+    ul.tags
+      each choice in choices
+        .tag.tag__choice
+          input(type="checkbox" id=choice)
+          label(for=choice) #{choice}
+    input(type="submit" value="储存" class="button")
