@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const routes = require('./routes/index');
 const helpers = require('./helpers');
+const errorHandlers = require('./handlers/errorHandlers');
 
 const app = express();
 
@@ -24,6 +25,11 @@ app.use((req, res, next) => {
 });
 
 app.use('/', routes);
+
+// not found middleware
+app.use(errorHandlers.notFound);
+
+app.use(errorHandlers.developmentErrors);
 
 // export it so we can start the site in start.js
 module.exports = app;
