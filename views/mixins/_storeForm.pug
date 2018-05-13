@@ -1,5 +1,5 @@
 mixin storeForm()
-  form(action=`/add` method="POST")
+  form(action=`/add` method="POST" enctype="multipart/form-data" class="card")
     label(for="name") 名称
     input(type="text" name="name")
     label(for="description") 描述
@@ -19,6 +19,6 @@ mixin storeForm()
     ul.tags
       each choice in choices
         .tag.tag__choice
-          input(type="checkbox" id=choice)
+          input(type="checkbox" id=choice name="tags" value=choice)
           label(for=choice) #{choice}
     input(type="submit" value="储存" class="button")

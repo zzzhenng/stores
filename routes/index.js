@@ -1,15 +1,16 @@
 const express = require('express');
-const sotreController = require('../controllers/storeController');
+const { catchErrors } = require('../handlers/errorHandlers');
+const storeController = require('../controllers/storeController');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.render('stores', { title: 'Stores' });
-});
+router.get('/', storeController.homePage);
 
-router.get('/add', sotreController.addStore);
+router.get('/add', storeController.addStore);
 router.post(
   '/add',
-  sotreController.createStore,
+  storeController.upload,
+  catchErrors(storeController.resize),
+  catchErrors(storeController.createStore),
 );
 module.exports = router;

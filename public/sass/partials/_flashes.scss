@@ -1,0 +1,49 @@
+@keyframes slide {
+  0% {
+    transform: translateY(-20px);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.flash {
+  background: white;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+  padding: 0rem 2rem;
+  position: relative;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  animation: slide forwards .1s ease-in-out 2;
+  &__text {
+    flex: 1;
+  }
+  &__remove {
+    height: 50%;
+    align-self: center;
+    background: none;
+    border: 0;
+    outline: 0;
+    &:hover {
+      color: $yellow;
+    }
+  }
+  &--success {
+    color: #4BAD75;
+    border: 3px solid #4bad75;
+  }
+  &--error {
+    color: #AE5152;
+    border: 3px solid #AE5152;
+  }
+  &--info {
+    color: #ED9652;
+    border: 3px solid #ED9652;
+  }
+}

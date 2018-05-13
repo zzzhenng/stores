@@ -478,6 +478,12 @@ label {
   padding: 1rem 0;
   display: block; }
 
+.card {
+  background-color: #f5ebcc;
+  padding: 5rem;
+  -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 1px 10px rgba(0, 0, 0, 0.15); }
+
 .search {
   position: relative;
   width: 100%;
@@ -500,6 +506,68 @@ label {
     color: #303030;
     outline: 0;
     border: 0; }
+
+@-webkit-keyframes slide {
+  0% {
+    -webkit-transform: translateY(-20px);
+            transform: translateY(-20px); }
+  50% {
+    -webkit-transform: translateY(20px);
+            transform: translateY(20px); }
+  100% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px); } }
+
+@keyframes slide {
+  0% {
+    -webkit-transform: translateY(-20px);
+            transform: translateY(-20px); }
+  50% {
+    -webkit-transform: translateY(20px);
+            transform: translateY(20px); }
+  100% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px); } }
+
+.flash {
+  background: white;
+  -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+  padding: 0rem 2rem;
+  position: relative;
+  border-radius: 3px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-animation: slide forwards .1s ease-in-out 2;
+          animation: slide forwards .1s ease-in-out 2; }
+  .flash__text {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1; }
+  .flash__remove {
+    height: 50%;
+    -ms-flex-item-align: center;
+        align-self: center;
+    background: none;
+    border: 0;
+    outline: 0; }
+    .flash__remove:hover {
+      color: #FFC40E; }
+  .flash--success {
+    color: #4BAD75;
+    border: 3px solid #4bad75; }
+  .flash--error {
+    color: #AE5152;
+    border: 3px solid #AE5152; }
+  .flash--info {
+    color: #ED9652;
+    border: 3px solid #ED9652; }
 
 .nav {
   display: -webkit-box;
@@ -552,11 +620,11 @@ label {
       height: 4rem; }
     .nav__link--logo svg {
       width: 10rem; }
-    .nav__link:hover {
+    .nav__link:hover, .nav__link--active {
       background: -webkit-gradient(linear, left top, right top, from(#48ded4), color-stop(20%, #a026bf), color-stop(60%, #e82c75), color-stop(85%, #FFC40E), color-stop(95%, #48ded4)) fixed;
       background: -o-linear-gradient(left, #48ded4 0%, #a026bf 20%, #e82c75 60%, #FFC40E 85%, #48ded4 95%) fixed;
       background: linear-gradient(90deg, #48ded4 0%, #a026bf 20%, #e82c75 60%, #FFC40E 85%, #48ded4 95%) fixed; }
-      .nav__link:hover svg {
+      .nav__link:hover svg, .nav__link--active svg {
         -webkit-transform: scale(1.2);
             -ms-transform: scale(1.2);
                 transform: scale(1.2); }

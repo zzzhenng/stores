@@ -3,6 +3,7 @@ extends layout
 include mixins/_storeForm
 
 block content
+  //- p= h.dump(locals.flashes)
   .inner
     h2= title
     +storeForm()

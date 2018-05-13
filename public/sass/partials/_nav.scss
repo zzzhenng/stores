@@ -1,7 +1,5 @@
 .nav {
   display: flex;
-  // flex-wrap: wrap;
-  // justify-content: space-between;
   padding: 0;
   margin: 0;
   list-style: none;
@@ -10,26 +8,14 @@
 
   &__section {
     display: flex;
-    // justify-content: space-between;
-    // align-items: center;
-    // transition: transform 0.2s;
-
-    &--pages {
-      // flex: 50%;
-    }
     &--search {
-      // flex: 40%;
       flex: 1 1 auto;
-    }
-    &--user {
-      // flex: 20%;
     }
   }
 
   &__item {
     // ??????????????
     display: flex;
-    // justify-content: space-between;
   }
 
   &__link {
@@ -51,7 +37,7 @@
         width: 10rem;
       }
     }
-    &:hover {
+    &:hover, &--active {
       svg {
         transform: scale(1.2);
       }

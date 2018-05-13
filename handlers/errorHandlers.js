@@ -9,6 +9,16 @@ exports.notFound = (req, res, next) => {
 };
 
 /*
+  Catch Errors Handler
+  在这里使用这个函数代替在 async/await 中使用 try{} catch(e) {} 捕捉错误。
+*/
+exports.catchErrors = (fn) => {
+  return function(req, res, next) {
+    return fn(req, res, next).catch(next);
+  };
+};
+
+/*
   Development Error Handler
 */
 exports.developmentErrors = (err, req, res, next) => {
