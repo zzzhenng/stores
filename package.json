@@ -5,21 +5,23 @@
   "main": "index.js",
   "scripts": {
     "watch": "nodemon ./start.js",
-    "assets": "webpack -w",
-    "start": "concurrently \"npm run watch\" \"npm run assets\" --name \"💻,📦\", --prifix name"
+    "assets": "webpack -w --display-max-modules 0",
+    "start": "concurrently \"npm run watch\"  \"npm run assets\" --name \"💻,📦\" --prifix name"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "pug": "^2.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^8.4.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
+    "browser-sync": "^2.24.4",
     "concurrently": "^3.5.1",
     "css-loader": "^0.28.11",
     "debug": "^3.1.0",

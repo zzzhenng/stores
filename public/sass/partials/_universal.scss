@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'my-font';
+  src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff') format('woff2'),
+       url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-size: 1.5rem;
+  color: $black;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 5rem;
+  font-family: 'my-font';
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+a {
+  text-decoration: none;
+  color: $black;
+}
+
+p a {
+  border-bottom: 2px solid $yellow;
+}
+
+p {
+  line-height: 2;
+  font-size: 1.6rem;
+}
+
+
