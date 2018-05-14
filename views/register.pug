@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  .inner
+    form.form(action="/register" method="POST")
+      h2 注册
+      label(for="name") 名称
+      input(type="text" name="name")
+      label(for="email") 邮箱
+      input(type="email" name="email")
+      label(for="password") 密码
+      input(type="password" name="password")
+      label(for="password-confirm") 确认密码
+      input(type="password" name="password-confirm")
+      input.button(type="submit" value="注册")

@@ -9,6 +9,17 @@ label {
   display: block;
 }
 
+.form {
+  margin-top: 1rem;
+  background: rgb(200, 231, 22);
+  padding: 2rem;
+  box-shadow: 9px 7px 34px -2px rgba(0,0,0,0.75);
+  h2 {
+    font-size: 3rem;
+
+  }
+}
+
 .card {
   background-color: rgb(245, 235, 204);
   padding: 5rem;

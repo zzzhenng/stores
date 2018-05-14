@@ -6,9 +6,13 @@ const flash = require('connect-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const expressValidator = require('express-validator');
+const passport = require('passport');
+const promisify = require('es6-promisify');
 const routes = require('./routes/index');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
+require('./handlers/passport');
 
 const app = express();
 
@@ -23,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(expressValidator());
 
 app.use(cookieParser());
 
@@ -34,6 +39,10 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection }),
 }));
 
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 // flash middleware
 app.use(flash());
 
@@ -44,7 +53,10 @@ app.use((req, res, next) => {
   next();
 });
 
-
+// app.use((req, res, next) => {
+//   req.login = promisify(req.login, req);
+//   next();
+// });
 
 app.use('/', routes);
 
