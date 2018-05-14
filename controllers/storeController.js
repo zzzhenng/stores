@@ -17,10 +17,6 @@ const multerOptions = {
   },
 };
 
-exports.homePage = (rq, res) => {
-  res.render('stores', { title: 'stores' });
-};
-
 exports.addStore = (req, res) => {
   res.render('editStore', { title: '新增' });
 };
@@ -42,6 +38,25 @@ exports.resize = async (req, res, next) => {
 
 exports.createStore = async (req, res) => {
   const store = await (new Store(req.body)).save();
-  req.flash('success', `成功创建 ${store.name}`);
+  req.flash('success', `成功添加 ${store.name}`);
   res.redirect('/');
+};
+
+exports.getStores = async (req, res) => {
+  const stores = await Store.find();
+  res.render('stores', { title: 'stores', stores });
+};
+
+exports.getStoresByTag = async (req, res) => {
+  const tag = req.params.tag;
+  const choice = tag || { $exists: true };
+  const tagsPromise = Store.getTagList();
+  const storesPromise = Store.find({ tags: choice });
+  const [tags, stores] = await Promise.all([tagsPromise, storesPromise]);
+  res.render('tag', { tags, title: 'Tags', tag, stores });
+};
+
+exports.getStoreByUuid = async (req, res) => {
+  const store = await Store.findOne({ uuid: req.params.uuid });
+  res.render('store', { title: store.name, store });
 };

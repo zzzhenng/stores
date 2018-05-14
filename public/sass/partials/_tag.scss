@@ -47,4 +47,25 @@
       background-color: #d9e7f0;
     }
   }
+
+  &__link {
+    background: $yellow;
+    color: $black;
+    display: flex;
+    padding-left: 1rem;
+    clip-path: polygon(24% 0, 100% 0, 100% 100%, 23% 100%, 0% 50%);
+    &--active {
+      background: rgb(222, 25, 240);
+    }
+  }
+  &__text {
+    padding: 1rem;
+    display: block;
+  }
+  &__count {
+    padding: 1rem;
+    background: white;
+    border-left: 3px solid rgba(0,0,0,0.1);
+
+  }
 }

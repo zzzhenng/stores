@@ -15,7 +15,7 @@ mixin storeForm()
     label(for="lat") 经度
     input(type="text" id="lat" name="location[coordinates][1]")
 
-    - const choices = ['小吃', '甜食', '西餐', '早餐', '汤羹', '热菜', '凉菜'];
+    - const choices = ['WiFi', '环境好', '凌晨营业', '停车位'];
     ul.tags
       each choice in choices
         .tag.tag__choice

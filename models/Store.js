@@ -45,4 +45,12 @@ storeSchema.pre('save', async function (next) {
   next();
 });
 
+storeSchema.static('getTagList', function () {
+  return this.aggregate([
+    { $unwind: '$tags' },
+    { $group: { _id: '$tags', count: { $sum: 1 } } },
+    { $sort: { count: 1 } }
+  ]);
+});
+
 module.exports = mongoose.model('Store', storeSchema);

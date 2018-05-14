@@ -7,10 +7,13 @@ require('dotenv').config({ path: 'variables.env' });
 
 // connect to our Database
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DATABASE, function(error) {
-  console.error(error.message);
+// mongoose.connect(process.env.DATABASE, function(error) {
+//   console.error(error);
+// });
+mongoose.connect(process.env.DATABASE);
+mongoose.connection.on('error', err => {
+  console.error(err.message);
 });
-
 
 // import all of our models
 require('./models/Store');
