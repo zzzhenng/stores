@@ -20,7 +20,8 @@ const userSchema = new mongoose.Schema({
     validate: [validator.isEmail, '无效的邮箱地址'],
     required: '您必须提供一个邮箱',
   },
-
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
 });
 
 userSchema.virtual('gravatar').get(function() {

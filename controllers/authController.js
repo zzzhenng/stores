@@ -1,6 +1,8 @@
 const promisify = require('es6-promisify');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const crypto = require('crypto');
+const mail = require('../handlers/mail');
 
 const User = mongoose.model('User');
 
@@ -63,4 +65,72 @@ exports.isLoggedIn = (req, res, next) => {
   }
   req.flash('error', '你必须登录后才能操作');
   res.redirect('/login');
+};
+
+/*
+  Reset Password
+
+  1. send a email with token and expire to user
+  2. user reset password
+  3. update password to database
+*/
+exports.forgotPass = async (req, res) => {
+  // 1. 查看用户是否存在
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    req.flash('error', '邮箱地址没有注册');
+    return res.redirect('/login');
+  }
+  // 2. 在数据库中给这个用户添加 token 与 expiry
+  user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+  user.resetPasswordExpires = Date.now() + 3600000; // 1 hour expires
+  await user.save();
+  // 3. 发送附带 token 的email
+  const resetURL = `http://${req.headers.host}/account/reset/${user.resetPasswordToken}`;
+  await mail.send({
+    user,
+    filename: 'password-reset',
+    subject: 'password reset',
+    resetURL,
+  });
+  req.flash('success', '重置密码邮件已经发送');
+  // 4. redirect
+  res.redirect('/login');
+}
+exports.resetPass = async (req, res) => {
+  const user = await User.findOne({
+    resetPasswordToken: req.params.token,
+    resetPasswordExpires: { $gt: Date.now() },
+  });
+  if (!user) {
+    req.flash('error', '链接已经过期或没有找到用户');
+    return res.redirect('/login');
+  }
+  return res.render('reset', { title: '重置密码' });
+};
+exports.confirmedPass = (req, res, next) => {
+  if (req.body.password === req.body['password-confirm']) {
+    return next();
+  }
+  req.flash('error', '您输入的密码不相同');
+  return res.redirect('back');
+};
+exports.updatePass = async (req, res) => {
+  const user = await User.findOne({
+    resetPasswordToken: req.params.token,
+    resetPasswordExpires: { $gt: Date.now() },
+  });
+  if (!user) {
+    req.flash('error', '密码设置无效或链接已经过期');
+    return res.redirect('/login');
+  }
+  const setPassword = promisify(user.setPassword, user);
+  await setPassword(req.body.password);
+
+  user.resetPasswordExpires = undefined;
+  user.resetPasswordToken = undefined;
+  const updateUser = await user.save();
+  await req.login(updateUser);
+  req.flash('success', '密码重置成功');
+  res.redirect('/');
 };

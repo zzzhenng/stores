@@ -38,3 +38,11 @@ router.post('/login', authController.postLogin);
 
 router.get('/logout', authController.logout);
 module.exports = router;
+
+router.post('/account/forgot', catchErrors(authController.forgotPass));
+router.get('/account/reset/:token', catchErrors(authController.resetPass));
+router.post(
+  '/account/reset/:token',
+  authController.confirmedPass,
+  catchErrors(authController.updatePass),
+);

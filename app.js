@@ -27,10 +27,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Validate register form body
 app.use(expressValidator());
 
+// cookie
 app.use(cookieParser());
-
+// session
 app.use(session({
   secret: process.env.SECRET,
   key: process.env.KEY,
@@ -39,7 +41,7 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection }),
 }));
 
-// Passport
+// Passport -- login()
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -54,16 +56,18 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use((req, res, next) => {
-  // req.login = promisify(req.login, req);
-  // next();
-// });
+// 使用 passport 的 req.login() 时不用写 callback
+app.use((req, res, next) => {
+  req.login = promisify(req.login, req);
+  next();
+});
 
 app.use('/', routes);
 
 // not found middleware
 app.use(errorHandlers.notFound);
 
+// mongoose validation error flash
 app.use(errorHandlers.flashValidationErrors);
 
 app.use(errorHandlers.developmentErrors);

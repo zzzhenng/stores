@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  .inner
+    form.form(method="POST")
+      h2 重置密码
+      label(for="password") 密码
+      input(type="password" name="password")
+      label(for="password-confirm") 确认密码
+      input(type="password" name="password-confirm")
+      input.button(type="submit" value="重置密码")
