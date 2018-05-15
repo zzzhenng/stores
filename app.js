@@ -49,19 +49,22 @@ app.use(flash());
 app.use((req, res, next) => {
   res.locals.h = helpers;
   res.locals.flashes = req.flash();
+  res.locals.user = req.user || null;
   res.locals.currentPath = req.path;
   next();
 });
 
 // app.use((req, res, next) => {
-//   req.login = promisify(req.login, req);
-//   next();
+  // req.login = promisify(req.login, req);
+  // next();
 // });
 
 app.use('/', routes);
 
 // not found middleware
 app.use(errorHandlers.notFound);
+
+app.use(errorHandlers.flashValidationErrors);
 
 app.use(errorHandlers.developmentErrors);
 

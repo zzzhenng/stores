@@ -18,6 +18,20 @@ exports.catchErrors = (fn) => {
   };
 };
 
+
+/*
+  MongoDB Validation Error Handler
+
+  当 MongoDB自带的验证出错时，由此处捕捉。
+*/
+exports.flashValidationErrors = (err, req, res, next) => {
+  if (!err.errors) return next(err);
+  const errorKeys = Object.keys(err.errors);
+  errorKeys.forEach(key => req.flash('error', err.errors[key].message));
+  return res.redirect('back');
+};
+
+
 /*
   Development Error Handler
 */

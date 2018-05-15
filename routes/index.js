@@ -7,7 +7,11 @@ const router = express.Router();
 
 router.get('/', storeController.getStores);
 
-router.get('/add', storeController.addStore);
+router.get(
+  '/add',
+  authController.isLoggedIn,
+  storeController.addStore,
+);
 router.post(
   '/add',
   storeController.upload,
@@ -26,6 +30,11 @@ router.post(
   '/register',
   authController.validateRegister,
   catchErrors(authController.postRegister),
-  authController.login,
+  authController.postLogin,
 );
+
+router.get('/login', authController.getLogin);
+router.post('/login', authController.postLogin);
+
+router.get('/logout', authController.logout);
 module.exports = router;

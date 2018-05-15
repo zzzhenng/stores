@@ -12,7 +12,6 @@ exports.getRegister = (req, res) => {
   POST Register
   1. Validate form content.
   2. Register new user to database.
-  3. Login
 */
 exports.validateRegister = (req, res, next) => {
   req.sanitizeBody('name');
@@ -26,12 +25,13 @@ exports.validateRegister = (req, res, next) => {
   req.checkBody('password-confirm', '确认密码不能为空').notEmpty();
   req.checkBody('password-confirm', '您输入的密码不相同').equals(req.body.password);
 
+  // Express-Validator Flash
   const errors = req.validationErrors();
   if (errors) {
     req.flash('error', errors.map(err => err.msg));
     res.render('register', { title: '注册', body: req.body, flashes: req.flash() });
   }
-  next();
+  return next();
 };
 exports.postRegister = async (req, res, next) => {
   const user = new User({ email: req.body.email, name: req.body.name });
@@ -39,9 +39,28 @@ exports.postRegister = async (req, res, next) => {
   await register(user, req.body.password);
   next();
 };
-exports.login = passport.authenticate('local', {
+
+exports.getLogin = (req, res) => {
+  res.render('login', { title: '登录' });
+};
+
+exports.postLogin = passport.authenticate('local', {
   failureRedirect: '/login',
   failureFlash: '登录失败',
   successRedirect: '/',
   successFlash: '登录成功，欢迎！',
 });
+
+exports.logout = (req, res) => {
+  req.logout();
+  req.flash('success', '登出成功');
+  res.redirect('/');
+};
+
+exports.isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  req.flash('error', '你必须登录后才能操作');
+  res.redirect('/login');
+};
