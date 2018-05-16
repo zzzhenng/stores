@@ -6,15 +6,18 @@ const mail = require('../handlers/mail');
 
 const User = mongoose.model('User');
 
-exports.getRegister = (req, res) => {
-  res.render('register', { title: '注册' });
-};
 
 /*
+  GET /
   POST Register
   1. Validate form content.
   2. Register new user to database.
 */
+
+exports.getRegister = (req, res) => {
+  res.render('register', { title: '注册' });
+};
+
 exports.validateRegister = (req, res, next) => {
   req.sanitizeBody('name');
   req.checkBody('name', '你必须提供一个名称').notEmpty();
@@ -42,6 +45,9 @@ exports.postRegister = async (req, res, next) => {
   next();
 };
 
+/*
+  Login / Logout
+*/
 exports.getLogin = (req, res) => {
   res.render('login', { title: '登录' });
 };
@@ -133,4 +139,24 @@ exports.updatePass = async (req, res) => {
   await req.login(updateUser);
   req.flash('success', '密码重置成功');
   res.redirect('/');
+};
+
+/*
+  Update user account
+*/
+exports.getAccount = (req, res) => {
+  res.render('account', { title: 'Edit Account' });
+};
+exports.updateAccount = async (req, res) => {
+  const updates = {
+    name: req.body.name,
+    email: req.body.email,
+  };
+  const user = await User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $set: updates },
+    { new: true, runValidators: true, context: 'query' },
+  );
+  req.flash('success', '更新成功');
+  res.redirect('back');
 };

@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  .inner
+    h2 编辑账号资料
+    form.form(action="/account" method="POST")
+      lable(for="name") 名称
+      input(type="text" name="name" value=user.name)
+      lable(for="email") 邮箱
+      input(type="email" name="email" value=user.email)
+      input.button(type="submit" value="更新账户")
