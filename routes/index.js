@@ -53,3 +53,8 @@ router.post(
   authController.confirmedPass,
   catchErrors(authController.updatePass),
 );
+
+/**
+ *  API
+*/
+router.post('/api/stores/:id/heart', catchErrors(storeController.heartStore));

@@ -34,6 +34,11 @@ const storeSchema = new mongoose.Schema({
     },
   },
   photo: String,
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    requried: '您必须选择一个用户',
+  }
 });
 
 storeSchema.pre('save', async function (next) {

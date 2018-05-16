@@ -6,7 +6,7 @@ exports.dump = (obj) => JSON.stringify(obj, null, 2);
 exports.icon = (name) => fs.readFileSync(`./public/images/icons/${name}.svg`);
 
 // Google Static Map
-exports.staticMap = ([lat,lng]) => `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=15&size=800x150&markers=${lat},${lng}&scale=2&key=${process.env.MAP_KEY}`;
+exports.staticMap = ([lng, lat]) => `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=15&size=800x150&markers=${lat},${lng}&scale=2&key=${process.env.MAP_KEY}`;
 
 // site name
 exports.siteName = `舌尖美食`;

@@ -4,6 +4,7 @@ const jimp = require('jimp');
 const uuidv4 = require('uuid');
 
 const Store = mongoose.model('Store');
+const User = mongoose.model('User');
 
 const multerOptions = {
   storage: multer.memoryStorage(),
@@ -37,6 +38,7 @@ exports.resize = async (req, res, next) => {
 };
 
 exports.createStore = async (req, res) => {
+  req.body.author = req.user._id;
   const store = await (new Store(req.body)).save();
   req.flash('success', `成功添加 ${store.name}`);
   res.redirect('/');
@@ -59,4 +61,15 @@ exports.getStoresByTag = async (req, res) => {
 exports.getStoreByUuid = async (req, res) => {
   const store = await Store.findOne({ uuid: req.params.uuid });
   res.render('store', { title: store.name, store });
+};
+
+exports.heartStore = async (req, res) => {
+  const hearts = req.user.hearts.map(obj => obj.toString());
+  const operator = hearts.includes(req.params.id) ? '$pull' : '$addToSet';
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    { [operator]: { hearts: req.params.id } },
+    { new: true },
+  );
+  res.json(user);
 };
