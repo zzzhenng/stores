@@ -780,6 +780,14 @@ label {
   -ms-flex-pack: distribute;
       justify-content: space-around; }
 
+.store__action {
+  font-size: 10px; }
+  .store__action svg {
+    width: 25px;
+    fill: white; }
+  .store__action--edit a {
+    border-bottom: 0; }
+
 .tags {
   margin-top: .5rem;
   padding: 0;

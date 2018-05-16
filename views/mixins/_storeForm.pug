@@ -1,24 +1,27 @@
 mixin storeForm()
-  form(action=`/add` method="POST" enctype="multipart/form-data" class="card")
+  form(action=`/add/${store._id || ''}` method="POST" enctype="multipart/form-data" class="card")
     label(for="name") 名称
-    input(type="text" name="name")
+    input(type="text" name="name" value=`${store.name || ''}`)
     label(for="description") 描述
-    textarea(name="description")
+    textarea(name="description")= store.description
     //- Image upload
     label(for="photo") 照片
     input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
+    if store.photo
+      img(src=`/uploads/${store.photo}`, alt="" width=200)
     //- Address
     label(for="address") 地址
-    input(type="text" id="address" name="location[address]")
+    input(type="text" id="address" name="location[address]" value=(store.location && store.location.address))
     label(for="lng") 纬度
-    input(type="text" id="lng" name="location[coordinates][0]")
+    input(type="text" id="lng" name="location[coordinates][0]" value=(store.location && store.location.coordinates[0]))
     label(for="lat") 经度
-    input(type="text" id="lat" name="location[coordinates][1]")
+    input(type="text" id="lat" name="location[coordinates][1]" value=(store.location && store.location.coordinates[1]))
 
     - const choices = ['WiFi', '环境好', '凌晨营业', '停车位'];
+    - const tags = store.tags || []
     ul.tags
       each choice in choices
         .tag.tag__choice
-          input(type="checkbox" id=choice name="tags" value=choice)
+          input(type="checkbox" id=choice name="tags" value=choice checked=(tags.includes(choice)))
           label(for=choice) #{choice}
     input(type="submit" value="储存" class="button")

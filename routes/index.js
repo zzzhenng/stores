@@ -5,7 +5,23 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
+
 router.get('/', storeController.getStores);
+// 显示所有餐厅
+router.get('/stores', catchErrors(storeController.getStores));
+// 单个餐厅显示
+router.get('/store/:uuid', catchErrors(storeController.getStoreByUuid));
+// 修改餐厅
+router.get('/stores/:id/edit', catchErrors(storeController.getEditStore));
+router.post(
+  '/add/:id',
+  storeController.upload,
+  catchErrors(storeController.resize),
+  catchErrors(storeController.updateStore),
+);
+
+router.get('/tags', catchErrors(storeController.getStoresByTag));
+router.get('/tags/:tag', catchErrors(storeController.getStoresByTag));
 
 router.get(
   '/add',
@@ -19,11 +35,6 @@ router.post(
   catchErrors(storeController.createStore),
 );
 
-router.get('/stores', catchErrors(storeController.getStores));
-router.get('/tags', catchErrors(storeController.getStoresByTag));
-router.get('/tags/:tag', catchErrors(storeController.getStoresByTag));
-
-router.get('/store/:uuid', catchErrors(storeController.getStoreByUuid));
 
 router.get('/register', authController.getRegister);
 router.post(
@@ -39,6 +50,7 @@ router.post('/login', authController.postLogin);
 router.get('/logout', authController.logout);
 module.exports = router;
 
+// 更改用户资料
 router.get(
   '/account',
   authController.isLoggedIn,
@@ -46,6 +58,7 @@ router.get(
 );
 router.post('/account', catchErrors(authController.updateAccount));
 
+// 更改密码
 router.post('/account/forgot', catchErrors(authController.forgotPass));
 router.get('/account/reset/:token', catchErrors(authController.resetPass));
 router.post(

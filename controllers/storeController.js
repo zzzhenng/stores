@@ -63,6 +63,24 @@ exports.getStoreByUuid = async (req, res) => {
   res.render('store', { title: store.name, store });
 };
 
+exports.getEditStore = async (req, res) => {
+  const store = await Store.findOne({ _id: req.params.id });
+  if (!store.author.equals(req.user._id)) {
+    throw Error('你必须创建自己的餐厅');
+  }
+  res.render('editStore', { title: '修改餐厅', store });
+};
+
+exports.updateStore = async (req, res) => {
+  const store = await Store.findOneAndUpdate(
+    { _id: req.params.id },
+    req.body,
+    { new: true, runValidators: true },
+  ).exec();
+  req.flash('success', `成功更新 ${store.name}`);
+  res.redirect('/stores');
+};
+
 exports.heartStore = async (req, res) => {
   const hearts = req.user.hearts.map(obj => obj.toString());
   const operator = hearts.includes(req.params.id) ? '$pull' : '$addToSet';
