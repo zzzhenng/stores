@@ -54,6 +54,11 @@ router.post(
   catchErrors(authController.updatePass),
 );
 
+router.get(
+  '/hearts',
+  catchErrors(storeController.getHearts),
+);
+
 /**
  *  API
 */
