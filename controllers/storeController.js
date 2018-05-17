@@ -55,7 +55,7 @@ exports.getStoresByTag = async (req, res) => {
   const tagsPromise = Store.getTagList();
   const storesPromise = Store.find({ tags: choice });
   const [tags, stores] = await Promise.all([tagsPromise, storesPromise]);
-  res.render('tag', { tags, title: 'Tags', tag, stores });
+  res.render('tag', {tags, title: 'Tags', tag, stores });
 };
 
 exports.getStoreByUuid = async (req, res, next) => {
@@ -100,3 +100,10 @@ exports.getHearts = async (req, res) => {
   });
   res.render('stores', { title: '收藏的餐厅', stores });
 };
+
+exports.getTopStores = async (req, res) => {
+  const stores = await Store.getTopStores();
+  // res.json(stores);
+  res.render('topStores', { stores, title: '排名' });
+};
+

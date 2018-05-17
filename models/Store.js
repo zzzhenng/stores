@@ -63,6 +63,26 @@ storeSchema.static('getTagList', function () {
   ]);
 });
 
+storeSchema.static('getTopStores', function() {
+  return this.aggregate([
+    { $lookup: { from: 'reviews', localField: '_id', foreignField: 'store', as: 'reviews' } },
+    // filter。 只留下评论个数 >= 2个的store
+    { $match: { 'reviews.1': { $exists: true } } },
+    // 提取出需要的属性
+    { $project: {
+      photo: '$$ROOT.photo',
+      name: '$$ROOT.name',
+      reviews: '$$ROOT.reviews',
+      averageRating: { $avg: '$reviews.rating' },
+      uuid: '$$ROOT.uuid',
+    } },
+    // 排序
+    { $sort: { averageRating: -1 } },
+    // 列出前10名
+    { $limit: 10 }
+  ]);
+});
+
 // 找到 Store _id == Review store 的评论
 storeSchema.virtual('reviews', {
   ref: 'Review',

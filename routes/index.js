@@ -30,6 +30,8 @@ router.post(
 router.get('/tags', catchErrors(storeController.getStoresByTag));
 router.get('/tags/:tag', catchErrors(storeController.getStoresByTag));
 
+router.get('/top', catchErrors(storeController.getTopStores));
+
 router.get(
   '/add',
   authController.isLoggedIn,

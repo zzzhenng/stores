@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  .inner
+    h2 前 #{stores.length} 名餐厅
+    table.table
+      thead
+        td 照片
+        td 排名
+        td 名称
+        td 平均得分
+        td 对比
+      each store, i in stores
+        tr
+          td
+            a(href=`/store/${store.uuid}`)
+              img(width=200 src=`/uploads/${store.photo || store.jpg }` alt=store.name)
+          td #{i + 1}
+          td: a(href=`store/#{store.uuid}`)= store.name
+          td #{store.averageRating}
+          td  #{Math.round(store.averageRating * 10) / 10} / 5

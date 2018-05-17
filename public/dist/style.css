@@ -705,6 +705,18 @@ label {
       -ms-flex-pack: distribute;
           justify-content: space-around; } }
 
+.table {
+  width: 100%; }
+  .table td {
+    padding: .5rem; }
+  .table tr:nth-child(even) {
+    background: white; }
+  .table tr:nth-child(odd):not(:first-child) {
+    background: grey; }
+  .table thead tr {
+    background: red;
+    color: white; }
+
 .stores {
   display: -webkit-box;
   display: -ms-flexbox;

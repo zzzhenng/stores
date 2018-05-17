@@ -1,0 +1,16 @@
+.table {
+  width: 100%;
+  td {
+    padding: .5rem;
+  }
+  tr:nth-child(even) {
+    background: white;
+  }
+  tr:nth-child(odd):not(:first-child) {
+    background: grey;
+  }
+  thead tr {
+    background: red;
+    color: white;
+  }
+}
