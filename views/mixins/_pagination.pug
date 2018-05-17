@@ -1,0 +1,10 @@
+mixin pagination(page, pages, count)
+  .pagination
+    .pagination__prev
+      if page > 1
+        a(href=`/stores/page/${page - 1}`) 上一页
+    .pagination__text
+      p 第 #{page} 页 - 共 #{pages} 页
+    .pagination__next
+      if page < pages
+        a(href=`/stores/page/${parseFloat(page) + 1}`) 下一页

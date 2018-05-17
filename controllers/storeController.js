@@ -45,8 +45,22 @@ exports.createStore = async (req, res) => {
 };
 
 exports.getStores = async (req, res) => {
-  const stores = await Store.find();
-  res.render('stores', { title: 'stores', stores });
+  const page = req.params.page || 1;
+  const limit = 4;
+  const skip = (page * limit) - limit;
+  const storesPromise = Store
+    .find()
+    .skip(skip)
+    .limit(limit)
+    .sort({ created: 'desc' });
+  const countPromise = Store.count();
+  const [stores, count] = await Promise.all([storesPromise, countPromise]);
+  const pages = Math.ceil(count / limit);
+  if (!stores.length && skip) {
+    req.flash('info', '页面不存在，转到首页');
+    res.redirect(`/stores`);
+  }
+  res.render('stores', { title: 'stores', stores, page, pages, count });
 };
 
 exports.getStoresByTag = async (req, res) => {

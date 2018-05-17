@@ -10,6 +10,7 @@ const router = express.Router();
 router.get('/', storeController.getStores);
 // 显示所有餐厅
 router.get('/stores', catchErrors(storeController.getStores));
+router.get('/stores/page/:page', catchErrors(storeController.getStores));
 // 单个餐厅显示
 router.get('/store/:uuid', catchErrors(storeController.getStoreByUuid));
 // 评论

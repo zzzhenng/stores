@@ -17,7 +17,8 @@ mixin storeForm(store = {})
     label(for="lat") 经度
     input(type="text" id="lat" name="location[coordinates][1]" value=(store.location && store.location.coordinates[1]))
 
-    - const choices = ['WiFi', '环境好', '凌晨营业', '停车位'];
+    //- - const choices = ['WiFi', '环境好', '凌晨营业', '停车位'];
+    - const choices = ["Family Friendly", "Vega", "Licensed"];
     - const tags = store.tags || []
     ul.tags
       each choice in choices
