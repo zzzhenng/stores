@@ -550,6 +550,12 @@ label {
     color: #303030;
     outline: 0;
     border: 0; }
+  .search__result {
+    padding: 1rem;
+    display: block;
+    border-bottom: 1px solid #ececec; }
+    .search__result--active {
+      background: #f1f1f1; }
 
 @-webkit-keyframes slide {
   0% {

@@ -44,7 +44,6 @@ router.post(
   catchErrors(storeController.createStore),
 );
 
-
 router.get('/register', authController.getRegister);
 router.post(
   '/register',
@@ -85,3 +84,4 @@ router.get(
  *  API
 */
 router.post('/api/stores/:id/heart', catchErrors(storeController.heartStore));
+router.get('/api/search', catchErrors(storeController.searchStores));
