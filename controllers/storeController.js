@@ -58,8 +58,10 @@ exports.getStoresByTag = async (req, res) => {
   res.render('tag', { tags, title: 'Tags', tag, stores });
 };
 
-exports.getStoreByUuid = async (req, res) => {
-  const store = await Store.findOne({ uuid: req.params.uuid });
+exports.getStoreByUuid = async (req, res, next) => {
+  const store = await Store.findOne({ uuid: req.params.uuid }).populate('author reviews');
+  if (!store) return next();
+  // res.json(store);
   res.render('store', { title: store.name, store });
 };
 

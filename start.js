@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-
-
 // import environmental
 require('dotenv').config({ path: 'variables.env' });
 
@@ -18,6 +16,7 @@ mongoose.connection.on('error', err => {
 // import all of our models
 require('./models/Store');
 require('./models/User');
+require('./models/Review');
 
 // start app
 const app = require('./app');

@@ -38,8 +38,13 @@ const storeSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     requried: '您必须选择一个用户',
-  }
-});
+  },
+},
+{
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
+},
+);
 
 storeSchema.pre('save', async function (next) {
   if (!this.isModified('name')) {
@@ -56,6 +61,13 @@ storeSchema.static('getTagList', function () {
     { $group: { _id: '$tags', count: { $sum: 1 } } },
     { $sort: { count: 1 } }
   ]);
+});
+
+// 找到 Store _id == Review store 的评论
+storeSchema.virtual('reviews', {
+  ref: 'Review',
+  localField: '_id',
+  foreignField: 'store',
 });
 
 module.exports = mongoose.model('Store', storeSchema);

@@ -2,6 +2,7 @@ const express = require('express');
 const { catchErrors } = require('../handlers/errorHandlers');
 const storeController = require('../controllers/storeController');
 const authController = require('../controllers/authController');
+const reviewController = require('../controllers/reviewController');
 
 const router = express.Router();
 
@@ -11,6 +12,12 @@ router.get('/', storeController.getStores);
 router.get('/stores', catchErrors(storeController.getStores));
 // 单个餐厅显示
 router.get('/store/:uuid', catchErrors(storeController.getStoreByUuid));
+// 评论
+router.post(
+  '/reviews/:id',
+  authController.isLoggedIn,
+  catchErrors(reviewController.addReview),
+);
 // 修改餐厅
 router.get('/stores/:id/edit', catchErrors(storeController.getEditStore));
 router.post(
