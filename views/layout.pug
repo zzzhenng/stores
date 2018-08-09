@@ -5,6 +5,8 @@ html
     link(rel='stylesheet', href='/dist/style.css')
     link(rel='shortcut icon' type="image/png" href="/images/icons/icon.png")
     meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="theme-color" content="#317EFB")
+    meta(name="description" content="Learn Node")
   body
     block header
       header.top
@@ -60,3 +62,4 @@ html
     block scripts
       script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)
       script(src="/dist/App.bundle.js")
+
